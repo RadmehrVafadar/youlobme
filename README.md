@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # You lob me?
 
 A plain white page with a cat and Yes/No buttons.
@@ -35,3 +36,6 @@ npm test
 ```
 
 Lint checks JavaScript syntax; tests cover playback timing, matching pairs, autoplay recovery, placement, both endings, and restarting.
+=======
+You lob me?
+>>>>>>> 4c899a8630a23c602d86a819943168802ed81cee
