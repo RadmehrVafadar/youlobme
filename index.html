@@ -18,6 +18,13 @@
       <button id="yes" type="button">Yes</button>
       <button id="no" type="button">No</button>
     </main>
+    <div id="volume-controls" aria-label="Volume controls">
+      <label for="music-volume">Background</label>
+      <input id="music-volume" type="range" min="0" max="100" value="85" aria-valuetext="85%">
+      <label for="voice-volume">Lob me</label>
+      <input id="voice-volume" type="range" min="0" max="150" value="110" aria-valuetext="110%">
+    </div>
     <audio id="audio" src="src/assets/lobme_mp4/youlobme1.m4a" preload="auto"></audio>
+    <audio id="music" src="src/assets/backgroundMusic/cat_happy_backgroundmusic.mp3" preload="auto" loop></audio>
   </body>
 </html>
