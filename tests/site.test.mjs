@@ -28,7 +28,7 @@ async function setup(play = () => Promise.resolve(), random, autoStart = true) {
     elements[id].offsetHeight = 32;
   }
   elements['volume-controls'].offsetHeight = 48;
-  elements['music-volume'].value = '85';
+  elements['music-volume'].value = '30';
   elements['voice-volume'].value = '110';
   const gain = { gain: { value: 1 }, connect() {} };
   let plays = 0;
@@ -81,14 +81,16 @@ test('opening screen waits for Start before questions and first voice clip', asy
   await access(new URL('../src/assets/cats/cat_start.png', import.meta.url));
 });
 
-test('volume defaults lower music to 85% and boost voices to 110%', async () => {
+test('volume defaults lower music to 30% and boost voices to 110%', async () => {
+  const html = await readFile(new URL('../index.html', import.meta.url), 'utf8');
+  assert.match(html, /id="music-volume"[^>]*value="30" aria-valuetext="30%"/);
   const app = await setup();
-  assert.equal(app.elements.music.volume, 0.85);
+  assert.equal(app.elements.music.volume, 0.3);
   assert.equal(app.gain.gain.value, 1.1);
   app.elements.no.listeners.click();
   assert.equal(app.gain.gain.value, 1);
   app.elements.audio.listeners.ended();
-  assert.equal(app.gain.gain.value, 0.85);
+  assert.equal(app.gain.gain.value, 0.3);
   app.elements.again.listeners.click();
   assert.equal(app.gain.gain.value, 1.1);
 });
