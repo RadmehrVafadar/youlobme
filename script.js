@@ -126,13 +126,13 @@ function showEnding(ending) {
   } else if (ending === 'happy') {
     picture.src = 'src/assets/cats/cat_jumping.gif';
     picture.alt = 'Happy jumping cat';
-    again.textContent = 'again';
+    again.textContent = 'again <3';
     void playHappyMusic();
     return;
   } else {
     picture.src = 'src/assets/cats/cat_sad.gif';
     picture.alt = 'Sad cat';
-    again.textContent = 'GO AGAIN';
+    again.textContent = 'GO AGAIN !!!!!';
     audio.src = 'src/assets/backgroundMusic/cat_sad_backgrondmusic.m4a';
   }
   void playAudio();

@@ -11,8 +11,8 @@ A plain white page with a cat and Yes/No buttons.
 - Repeats the current audio with a five-second pause after each playback.
 - Happy background music loops underneath the questions and continues into the happy ending.
 - Two small bottom-left sliders control background music (85% by default) and voice clips (110% by default).
-- Five Yes clicks show a centered happy cat GIF, looping happy music, and an again button below it.
-- No stops the current audio and shows an angry cat with a hiss, then a centered sad GIF with looping sad music and a GO AGAIN button.
+- Five Yes clicks show a centered happy cat GIF, looping happy music, and an `again <3` button below it.
+- No stops the current audio and shows an angry cat with a hiss, then a centered sad GIF with looping sad music and a `GO AGAIN !!!!!` button.
 
 ## Quick start
 

@@ -165,7 +165,7 @@ test('Yes cancels replay and advances matching pairs through cat 5', async () =>
   assert.equal(app.elements.picture.src, 'src/assets/cats/cat_jumping.gif');
   assert.equal(app.elements.music.paused, false);
   assert.equal(app.elements.again.hidden, false);
-  assert.equal(app.elements.again.textContent, 'again');
+  assert.equal(app.elements.again.textContent, 'again <3');
   assert.equal(app.plays(), 5);
 });
 
@@ -185,7 +185,7 @@ test('No plays the hiss with the angry cat, then sad GIF and looping music', asy
   assert.equal(app.elements.picture.src, 'src/assets/cats/cat_sad.gif');
   assert.equal(app.elements.audio.src, 'src/assets/backgroundMusic/cat_sad_backgrondmusic.m4a');
   assert.equal(app.elements.audio.loop, true);
-  assert.equal(app.elements.again.textContent, 'GO AGAIN');
+  assert.equal(app.elements.again.textContent, 'GO AGAIN !!!!!');
   assert.equal(app.elements.again.hidden, false);
   app.elements.audio.listeners.ended();
   assert.equal(app.timers.size, 0);
