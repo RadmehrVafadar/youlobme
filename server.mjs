@@ -8,7 +8,9 @@ const types = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascrip
 
 createServer(async (request, response) => {
   try {
-    const pathname = decodeURIComponent(new URL(request.url, 'http://localhost').pathname);
+    let pathname = decodeURIComponent(new URL(request.url, 'http://localhost').pathname);
+    if (pathname === '/youlobme') pathname = '/';
+    else if (pathname.startsWith('/youlobme/')) pathname = pathname.slice('/youlobme'.length);
     const path = resolve(root, `.${pathname === '/' ? '/index.html' : pathname}`);
     if (!path.startsWith(root + sep) || !types[extname(path)]) {
       response.writeHead(404).end();
