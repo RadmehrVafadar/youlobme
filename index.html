@@ -9,14 +9,15 @@
   </head>
   <body>
     <main aria-label="You lob me?">
-      <div id="cat">
-        <p id="question">you lob me?</p>
-        <img id="picture" src="src/assets/cats/cat1.png" alt="Cat 1">
+      <div id="cat" class="starting">
+        <button id="start" type="button">Start</button>
+        <p id="question" hidden>you lob me?</p>
+        <img id="picture" src="src/assets/cats/cat_start.png" alt="Cat looking up toward Start">
         <button id="again" type="button" hidden>again &lt;3</button>
         <p id="status" role="status" hidden></p>
       </div>
-      <button id="yes" type="button">Yes</button>
-      <button id="no" type="button">No</button>
+      <button id="yes" type="button" hidden>Yes</button>
+      <button id="no" type="button" hidden>No</button>
     </main>
     <div id="volume-controls" aria-label="Volume controls">
       <label for="music-volume">Background</label>

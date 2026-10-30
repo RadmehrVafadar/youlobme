@@ -6,6 +6,7 @@ const yes = document.getElementById('yes');
 const no = document.getElementById('no');
 const question = document.getElementById('question');
 const again = document.getElementById('again');
+const start = document.getElementById('start');
 const status = document.getElementById('status');
 const musicVolume = document.getElementById('music-volume');
 const voiceVolume = document.getElementById('voice-volume');
@@ -16,7 +17,7 @@ audioContext.createMediaElementSource(audio).connect(voiceGain);
 voiceGain.connect(audioContext.destination);
 let current = 1;
 let replay;
-let state = 'question';
+let state = 'start';
 let playback = 0;
 
 function updateVolumes() {
@@ -36,7 +37,7 @@ for (const slider of [musicVolume, voiceVolume]) {
 }
 
 async function playHappyMusic() {
-  if (!music.paused || (state !== 'question' && state !== 'happy')) return;
+  if (!music.paused || (state !== 'start' && state !== 'question' && state !== 'happy')) return;
   try {
     await music.play();
   } catch (error) {
@@ -161,11 +162,12 @@ no.addEventListener('click', () => {
     showEnding('hissing');
   }
 });
-again.addEventListener('click', () => {
+function beginQuestions() {
   stopAudio();
   state = 'question';
   current = 1;
   cat.className = '';
+  start.hidden = true;
   question.hidden = false;
   yes.hidden = false;
   no.hidden = false;
@@ -179,7 +181,9 @@ again.addEventListener('click', () => {
   music.pause();
   music.currentTime = 0;
   void playHappyMusic();
-});
+}
+start.addEventListener('click', beginQuestions);
+again.addEventListener('click', beginQuestions);
 audio.addEventListener('ended', () => {
   clearTimeout(replay);
   if (state === 'hissing') showEnding('sad');
@@ -191,5 +195,4 @@ audio.addEventListener('error', () => {
 window.addEventListener('resize', positionElements);
 positionElements();
 updateVolumes();
-void playAudio();
 void playHappyMusic();

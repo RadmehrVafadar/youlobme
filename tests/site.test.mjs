@@ -5,13 +5,13 @@ import vm from 'node:vm';
 
 const source = await readFile(new URL('../script.js', import.meta.url), 'utf8');
 
-async function setup(play = () => Promise.resolve(), random) {
+async function setup(play = () => Promise.resolve(), random, autoStart = true) {
   let randomCalls = 0;
   random ??= () => (++randomCalls % 100) / 100;
   const elements = {};
-  for (const id of ['cat', 'picture', 'audio', 'music', 'status', 'yes', 'no', 'question', 'again', 'music-volume', 'voice-volume', 'volume-controls']) {
+  for (const id of ['cat', 'picture', 'audio', 'music', 'status', 'yes', 'no', 'question', 'again', 'start', 'music-volume', 'voice-volume', 'volume-controls']) {
     elements[id] = {
-      hidden: ['status', 'again'].includes(id),
+      hidden: ['status', 'again', 'question', 'yes', 'no'].includes(id),
       style: {}, offsetWidth: 300, offsetHeight: 332, currentTime: 0,
       listeners: {},
       addEventListener(event, callback) { this.listeners[event] = callback; },
@@ -55,9 +55,31 @@ async function setup(play = () => Promise.resolve(), random) {
     setTimeout: (callback, delay) => { timers.set(callback, delay); return callback; },
     clearTimeout: (id) => timers.delete(id),
   });
+  if (autoStart) elements.start.listeners.click();
+  pauses = 0;
   await new Promise(setImmediate);
   return { elements, window, timers, gain, plays: () => plays, pauses: () => pauses, musicPlays: () => musicPlays };
 }
+
+test('opening screen waits for Start before questions and first voice clip', async () => {
+  const app = await setup(undefined, undefined, false);
+  assert.equal(app.plays(), 0);
+  assert.equal(app.elements.start.hidden, false);
+  assert.equal(app.elements.yes.hidden, true);
+  assert.equal(app.elements.no.hidden, true);
+  assert.equal(app.elements.question.hidden, true);
+  app.elements.yes.listeners.click();
+  assert.equal(app.plays(), 0);
+  app.elements.start.listeners.click();
+  assert.equal(app.plays(), 1);
+  assert.equal(app.elements.start.hidden, true);
+  assert.equal(app.elements.yes.hidden, false);
+  assert.equal(app.elements.no.hidden, false);
+  assert.equal(app.elements.question.hidden, false);
+  assert.equal(app.elements.picture.src, 'src/assets/cats/cat1.png');
+  assert.equal(app.elements.audio.src, 'src/assets/lobme_mp4/youlobme1.m4a');
+  await access(new URL('../src/assets/cats/cat_start.png', import.meta.url));
+});
 
 test('volume defaults lower music to 85% and boost voices to 110%', async () => {
   const app = await setup();
@@ -125,7 +147,7 @@ test('volume sliders adjust voices and both background tracks independently', as
 
 test('happy background music plays alongside questions and stops before the hiss', async () => {
   const app = await setup();
-  assert.equal(app.musicPlays(), 1);
+  assert.ok(app.musicPlays() >= 1);
   assert.equal(app.elements.music.paused, false);
   app.elements.music.currentTime = 12;
   app.elements.yes.listeners.click();
@@ -199,8 +221,8 @@ test('blocked autoplay keeps only Yes and No and Yes plays the next clip', async
   assert.equal(app.elements.yes.hidden, false);
   assert.equal(app.elements.no.hidden, false);
   const html = await readFile(new URL('../index.html', import.meta.url), 'utf8');
-  assert.doesNotMatch(html, /Start sound|id="start"/);
-  assert.equal((html.match(/<button /g) ?? []).length, 3);
+  assert.doesNotMatch(html, /Start sound/);
+  assert.equal((html.match(/<button /g) ?? []).length, 4);
   blocked = false;
   app.elements.yes.listeners.click();
   assert.equal(app.elements.audio.src, 'src/assets/lobme_mp4/youlobme2.m4a');

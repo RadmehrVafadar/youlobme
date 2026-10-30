@@ -5,7 +5,8 @@ A plain white page with a cat and Yes/No buttons.
 
 ## Features
 
-- Starts with cat 1 and audio 1; the cat, Yes, and No each get an independent random position.
+- Opens on a centered starting cat with a Start button at its upper-right.
+- Start begins cat 1 and audio 1; the cat, Yes, and No each get an independent random position.
 - Buttons stay clear of the cat, question text, each other, and the volume controls.
 - The Comic Sans question stays above the top-left corner of the cat image.
 - Repeats the current audio with a five-second pause after each playback.
@@ -23,7 +24,7 @@ npm run dev
 ```
 
 Visit http://127.0.0.1:5173.
-If your browser blocks autoplay, happy music and the next voice clip start when you click Yes.
+If your browser blocks autoplay, clicking Start begins happy music and the first voice clip.
 There is no separate sound button.
 Use the button below either ending GIF to restart from cat 1.
 There are no dependencies to install or build step.
